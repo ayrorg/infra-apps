@@ -1,0 +1,36 @@
+name: Workflow
+
+on:
+  push:
+    branches:
+      - main
+      - '[0-9]+.x'
+    tags:
+      - '*'
+
+jobs:
+  build:
+
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v2
+
+      - name: Use Node 18.x
+        uses: actions/setup-node@v3
+        with:
+          node-version: 18.x
+          cache: yarn
+
+      - name: Install dependencies
+        run: yarn install
+
+      - name: Lint
+        run: yarn lint
+
+      - name: Test
+        run: yarn test --passWithNoTests
+
+      - name: Build
+        run: yarn build

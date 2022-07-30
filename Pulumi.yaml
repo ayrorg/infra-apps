@@ -1,0 +1,7 @@
+name: infra-core-cluster
+runtime: 
+  name: nodejs
+  nodeargs: "--loader ts-node/esm"
+main: src/main.ts
+backend:
+  url: gs://ayr-pulumi/infra-core-cluster
