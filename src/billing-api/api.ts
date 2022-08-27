@@ -44,7 +44,7 @@ const deployment = new k8s.apps.v1.Deployment(
           containers: [
             {
               name: 'api',
-              image: 'getlago/api:v0.4.0-alpha',
+              image: 'getlago/api:v0.6.1-alpha',
               imagePullPolicy: 'IfNotPresent',
               ports: [{ containerPort: 3000 }],
               env: [

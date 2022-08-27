@@ -25,7 +25,7 @@ const deployment = new k8s.apps.v1.Deployment('billing-api-frontend', {
         containers: [
           {
             name: 'frontend',
-            image: 'getlago/front:v0.4.0-alpha',
+            image: 'getlago/front:v0.6.1-alpha',
             imagePullPolicy: 'IfNotPresent',
             ports: [{ containerPort: 80 }],
             env: [
