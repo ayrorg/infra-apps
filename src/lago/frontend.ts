@@ -3,7 +3,9 @@ import { interpolate } from '@pulumi/pulumi';
 import { apiDomain } from './config';
 import { namespace } from './namespace';
 
-const deployment = new k8s.apps.v1.Deployment('billing-api-frontend', {
+const name = 'lago';
+
+const deployment = new k8s.apps.v1.Deployment(`${name}-frontend`, {
   metadata: {
     name: 'frontend',
     namespace: namespace.metadata.name,
@@ -53,20 +55,17 @@ const deployment = new k8s.apps.v1.Deployment('billing-api-frontend', {
   },
 });
 
-export const service = new k8s.core.v1.Service(
-  'billing-api-frontend',
-  {
-    metadata: {
-      name: 'frontend',
-      namespace: namespace.metadata.name,
-    },
-    spec: {
-      ports: [
-        {
-          port: 80,
-        },
-      ],
-      selector: deployment.spec.selector.matchLabels,
-    },
+export const service = new k8s.core.v1.Service(`${name}-frontend`, {
+  metadata: {
+    name: 'frontend',
+    namespace: namespace.metadata.name,
   },
-);
+  spec: {
+    ports: [
+      {
+        port: 80,
+      },
+    ],
+    selector: deployment.spec.selector.matchLabels,
+  },
+});

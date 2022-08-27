@@ -4,7 +4,9 @@ import { apiDomain, frontendDomain } from './config';
 import { service as frontendService } from './frontend';
 import { namespace } from './namespace';
 
-export const ingress = new k8s.networking.v1.Ingress('billing-api-ingress', {
+const name = 'lago';
+
+export const ingress = new k8s.networking.v1.Ingress(`${name}-ingress`, {
   metadata: {
     name: 'api',
     namespace: namespace.metadata.name,
