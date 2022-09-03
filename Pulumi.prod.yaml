@@ -1,5 +1,7 @@
 secretsprovider: gcpkms://projects/ayr-core/locations/europe-north1/keyRings/pulumi/cryptoKeys/pulumi
 encryptedkey: CiQAwCZBCL9S9rvBagGe3KNZMxOTqlsDHlw37oXzHkk/gbomqy8SSQAu7GrOsyd5rv29TgZ+j4g39r6bv+9ku272yCDFgWFMTsc1tZAVUtSEBDPpHwTklDWb+Onm/J7paZTlyxnr8Qwv+FYSzWQGuuQ=
 config:
+  billing-api:image: europe-north1-docker.pkg.dev/ayr-core-service/ayr-core-service/billing-api
+  billing-api:tag: main-0e5b80b
   infra-core-cluster:system-email:
     secure: v1:+S2JrvrR4BE/SjHS:/J0zyuSBsjOc3Vk76PUkDJktsZGqsUwTMePiP6DbeH0POmlPVWL5g4xnhw==
