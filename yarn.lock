@@ -631,10 +631,10 @@
     "@nodelib/fs.scandir" "2.1.5"
     fastq "^1.6.0"
 
-"@pulumi/kubernetes@^3.20.2":
-  version "3.20.2"
-  resolved "https://registry.yarnpkg.com/@pulumi/kubernetes/-/kubernetes-3.20.2.tgz#8966e5415e68d59fcd85b0823ecc128bbf12db71"
-  integrity sha512-Hgloo8Rqr4UXK9nNNd6rmv0gS9fMINBiWXhc/7yW91F33EBRTWsYtimkxZGA5pg5gp/2R5Ifz6xDPL1wSBHbtw==
+"@pulumi/kubernetes@^3.21.4":
+  version "3.21.4"
+  resolved "https://registry.yarnpkg.com/@pulumi/kubernetes/-/kubernetes-3.21.4.tgz#f967b9ff72632f62e5de764a988d459298024a5d"
+  integrity sha512-y93V+IYbwlURGzeeelhQHNj1ykqqsEbnJ8cla0iyyV5Cs3ZfcwW6ZP7g3JZ2sdLD8RWjDWYB6rahYUpnQbOSPQ==
   dependencies:
     "@pulumi/pulumi" "^3.25.0"
     "@types/glob" "^5.0.35"
