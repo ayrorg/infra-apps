@@ -19,7 +19,7 @@ jobs:
     runs-on: ubuntu-latest
     strategy:
       matrix:
-        env: [dev, prod]
+        env: [prod] # [dev, prod]
     steps:
       - uses: actions/checkout@v3
 
@@ -44,9 +44,7 @@ jobs:
         env:
           GITHUB_TOKEN: ${{ secrets.BJERKBOT_GITHUB_TOKEN }}
         with:
-          stack-name: taksnor-app-${{ matrix.env }}
-          work-dir: stacks/app
-          cloud-url: gs://taksnor-pulumi
+          stack-name: ${{ matrix.env }}
           key: ${{ fromJson(steps.vars.outputs.result).name }}:tag
           value: ${{ fromJson(steps.vars.outputs.result).tag }}
 

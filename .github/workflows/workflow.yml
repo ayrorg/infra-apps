@@ -1,36 +1,68 @@
 name: Workflow
 
+permissions:
+  id-token: write
+  contents: read
+
 on:
   push:
     branches:
       - main
-      - '[0-9]+.x'
-    tags:
-      - '*'
 
 jobs:
-  build:
+  apply-changes:
+    name: Apply ${{ matrix.stack }}
 
     runs-on: ubuntu-latest
 
+    concurrency: pulumi
+
+    strategy:
+      fail-fast: false
+      matrix:
+        include:
+          - stack: prod
+            refresh: false
     steps:
       - name: Checkout
-        uses: actions/checkout@v2
+        uses: actions/checkout@v3
 
-      - name: Use Node 18.x
+      - name: Detecting changes in ${{ matrix.stack }}
+        uses: dorny/paths-filter@v2
+        id: changes
+        with:
+          filters: |
+            src:
+              - 'stacks/${{ matrix.path }}/**'
+              - 'yarn.lock'
+              - 'package.json'
+              - '.github/workflows/*'
+
+      - name: Authenticate to GCP
+        if: steps.changes.outputs.src == 'true'
+        uses: google-github-actions/auth@v0
+        with:
+          workload_identity_provider: ${{ secrets.WORKLOAD_IDENTITY_PROVIDER }}
+          service_account: ${{ secrets.SERVICE_ACCOUNT_EMAIL }}
+
+      - name: Use Node v16
+        if: steps.changes.outputs.src == 'true'
         uses: actions/setup-node@v3
         with:
-          node-version: 18.x
+          node-version: 16.x
           cache: yarn
 
       - name: Install dependencies
+        if: steps.changes.outputs.src == 'true'
         run: yarn install
 
       - name: Lint
+        if: steps.changes.outputs.src == 'true'
         run: yarn lint
 
-      - name: Test
-        run: yarn test --passWithNoTests
-
-      - name: Build
-        run: yarn build
+      - uses: pulumi/actions@v3
+        if: steps.changes.outputs.src == 'true'
+        with:
+          command: up
+          refresh: ${{ matrix.refresh }}
+          stack-name: ${{ matrix.stack }}
