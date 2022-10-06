@@ -1,0 +1,93 @@
+name: Update tag
+permissions:
+  id-token: write
+  contents: read
+on:
+  workflow_dispatch:
+    inputs:
+      tag:
+        description: Which tag
+        required: true
+      name:
+        description: Which app/service/config name
+        required: true
+  repository_dispatch:
+    types: [update-tag]
+jobs:
+  update-tag:
+    name: Update app tag
+    runs-on: ubuntu-latest
+    strategy:
+      matrix:
+        env: [dev, prod]
+    steps:
+      - uses: actions/checkout@v3
+
+      - uses: cobraz/setup-variables@v1
+        id: vars
+        with:
+          key: ${{ github.event_name }}
+          map: |
+            repository_dispatch: '{"tag": "${{ github.event.client_payload.tag }}", "name": "${{ github.event.client_payload.name }}"}'
+            workflow_dispatch: '{"tag": "${{ github.event.inputs.tag }}", "name": "${{ github.event.inputs.name }}"}'
+
+      - run: echo ${{ steps.vars.outputs.result }}
+
+      - name: Authenticate to GCP
+        uses: google-github-actions/auth@v0
+        with:
+          workload_identity_provider: ${{ secrets.WORKLOAD_IDENTITY_PROVIDER }}
+          service_account: ${{ secrets.SERVICE_ACCOUNT_EMAIL }}
+
+      - uses: cobraz/pulumi-set-config@main
+        id: config
+        env:
+          GITHUB_TOKEN: ${{ secrets.BJERKBOT_GITHUB_TOKEN }}
+        with:
+          stack-name: taksnor-app-${{ matrix.env }}
+          work-dir: stacks/app
+          cloud-url: gs://taksnor-pulumi
+          key: ${{ fromJson(steps.vars.outputs.result).name }}:tag
+          value: ${{ fromJson(steps.vars.outputs.result).tag }}
+
+      - name: Get commits
+        uses: actions/github-script@v4
+        id: changelog
+        with:
+          github-token: ${{ secrets.BJERKBOT_GITHUB_TOKEN }}
+          result-encoding: string
+          script: |
+
+            const [,head] = '${{ fromJson(steps.vars.outputs.result).tag }}'.split('-');
+            const [,base] = '${{ fromJson(steps.config.outputs.key).value }}'.split('-');
+
+            const compare = await github.repos.compareCommits({
+              owner: 'taksnor',
+              repo: '${{ fromJson(steps.vars.outputs.result).name }}',
+              base,
+              head,
+            });
+
+            const parseCommit = (message) => message.split('\n')[0].replace('#', 'taksnor/${{ fromJson(steps.vars.outputs.result).name }}#');
+            const changelog = compare.data.commits.map(commit => `* ${parseCommit(commit.commit.message)} ([commit](${commit.html_url}))`).join('\n');
+
+            return changelog;
+
+      - name: Create Pull Request
+        uses: peter-evans/create-pull-request@v3
+        with:
+          token: ${{ secrets.AYRBOT_GITHUB_TOKEN }}
+          commit-message:
+            bump ${{ fromJson(steps.vars.outputs.result).name }} to ${{
+            fromJson(steps.vars.outputs.result).tag }} on ${{ matrix.env }}
+          branch:
+            bump-tag-${{ fromJson(steps.vars.outputs.result).name }}-${{
+            matrix.env }}
+          title:
+            'chore: bump ${{ fromJson(steps.vars.outputs.result).name }} tag to
+            `${{ fromJson(steps.vars.outputs.result).tag }}` on ${{ matrix.env
+            }}'
+          body: |
+            Automated tag change on ${{ matrix.env }}. 🎉
+
+            ${{ steps.changelog.outputs.result }}
