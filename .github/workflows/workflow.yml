@@ -64,6 +64,5 @@ jobs:
         if: steps.changes.outputs.src == 'true'
         with:
           command: up
-          cloud-url: gs://ayr-pulumi/infra-core-cluster
           refresh: ${{ matrix.refresh }}
           stack-name: ${{ matrix.stack }}
