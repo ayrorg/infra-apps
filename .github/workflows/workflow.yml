@@ -60,6 +60,8 @@ jobs:
         if: steps.changes.outputs.src == 'true'
         run: yarn lint
 
+      - run: gsutil ls gs://ayr-pulumi/infra-core-cluster
+
       - uses: pulumi/actions@v3
         if: steps.changes.outputs.src == 'true'
         with:

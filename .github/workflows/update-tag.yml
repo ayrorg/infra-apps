@@ -44,7 +44,6 @@ jobs:
         env:
           GITHUB_TOKEN: ${{ secrets.BJERKBOT_GITHUB_TOKEN }}
         with:
-          cloud-url: gs://ayr-pulumi/infra-core-cluster
           stack-name: ${{ matrix.env }}
           key: ${{ fromJson(steps.vars.outputs.result).name }}:tag
           value: ${{ fromJson(steps.vars.outputs.result).tag }}
