@@ -60,6 +60,10 @@ jobs:
         if: steps.changes.outputs.src == 'true'
         run: yarn lint
 
+
+      - name: 'Set up Cloud SDK'
+        uses: 'google-github-actions/setup-gcloud@v0'
+
       - run: gsutil ls gs://ayr-pulumi/infra-core-cluster
 
       - uses: pulumi/actions@v3
