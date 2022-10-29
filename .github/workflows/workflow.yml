@@ -8,6 +8,7 @@ on:
   push:
     branches:
       - main
+      - fixing-workflows
 
 jobs:
   apply-changes:
@@ -45,11 +46,11 @@ jobs:
           workload_identity_provider: ${{ secrets.WORKLOAD_IDENTITY_PROVIDER }}
           service_account: ${{ secrets.SERVICE_ACCOUNT_EMAIL }}
 
-      - name: Use Node v16
+      - name: Use Node LTS
         if: steps.changes.outputs.src == 'true'
         uses: actions/setup-node@v3
         with:
-          node-version: 16.x
+          node-version: lts/*
           cache: yarn
 
       - name: Install dependencies
@@ -61,10 +62,8 @@ jobs:
         run: yarn lint
 
 
-      - name: 'Set up Cloud SDK'
-        uses: 'google-github-actions/setup-gcloud@v0'
-
-      - run: gsutil ls gs://ayr-pulumi/infra-core-cluster
+      - name: Set up Cloud SDK
+        uses: google-github-actions/setup-gcloud@v0
 
       - uses: pulumi/actions@v3
         if: steps.changes.outputs.src == 'true'
