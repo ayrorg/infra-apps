@@ -61,13 +61,10 @@ jobs:
         if: steps.changes.outputs.src == 'true'
         run: yarn lint
 
-
-      - name: Set up Cloud SDK
-        uses: google-github-actions/setup-gcloud@v0
-
       - uses: pulumi/actions@v3
         if: steps.changes.outputs.src == 'true'
         with:
           command: up
           refresh: ${{ matrix.refresh }}
+          cloud-url: gs://ayr-pulumi/infra-core-cluster
           stack-name: ${{ matrix.stack }}
