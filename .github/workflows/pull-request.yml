@@ -10,10 +10,10 @@ jobs:
       - name: Checkout
         uses: actions/checkout@v2
 
-      - name: Use Node 18.x
+      - name: Use Node LTS
         uses: actions/setup-node@v3
         with:
-          node-version: 18.x
+          node-version: lts/*
           cache: yarn
 
       - name: Install dependencies
@@ -25,5 +25,8 @@ jobs:
       - name: Test
         run: yarn test --passWithNoTests
 
-      - name: Build
-        run: yarn build
+      - uses: pulumi/actions@v3
+        if: steps.changes.outputs.src == 'true'
+        with:
+          command: preview
+          stack-name: prod
