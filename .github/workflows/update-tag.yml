@@ -72,7 +72,7 @@ jobs:
             return changelog;
 
       - name: Create Pull Request
-        uses: peter-evans/create-pull-request@v3
+        uses: peter-evans/create-pull-request@v4
         with:
           token: ${{ secrets.AYRBOT_GITHUB_TOKEN }}
           commit-message:
