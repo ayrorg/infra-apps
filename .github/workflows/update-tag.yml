@@ -64,13 +64,13 @@ jobs:
             }
 
             const compare = await github.repos.compareCommits({
-              owner: 'taksnor',
+              owner: 'ayrorg',
               repo: '${{ fromJson(steps.vars.outputs.result).name }}',
               base,
               head,
             });
 
-            const parseCommit = (message) => message.split('\n')[0].replace('#', 'taksnor/${{ fromJson(steps.vars.outputs.result).name }}#');
+            const parseCommit = (message) => message.split('\n')[0].replace('#', 'ayrorg/${{ fromJson(steps.vars.outputs.result).name }}#');
             const changelog = compare.data.commits.map(commit => `* ${parseCommit(commit.commit.message)} ([commit](${commit.html_url}))`).join('\n');
 
             return changelog;
