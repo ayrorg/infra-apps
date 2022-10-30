@@ -42,22 +42,26 @@ jobs:
       - uses: cobraz/pulumi-set-config@main
         id: config
         env:
-          GITHUB_TOKEN: ${{ secrets.BJERKBOT_GITHUB_TOKEN }}
+          GITHUB_TOKEN: ${{ secrets.AYRBOT_GITHUB_TOKEN }}
         with:
           stack-name: ${{ matrix.env }}
           key: ${{ fromJson(steps.vars.outputs.result).name }}:tag
           value: ${{ fromJson(steps.vars.outputs.result).tag }}
 
       - name: Get commits
-        uses: actions/github-script@v6.3.3
+        uses: actions/github-script@v4
         id: changelog
         with:
-          github-token: ${{ secrets.BJERKBOT_GITHUB_TOKEN }}
+          github-token: ${{ secrets.AYRBOT_GITHUB_TOKEN }}
           result-encoding: string
           script: |
 
             const [,head] = '${{ fromJson(steps.vars.outputs.result).tag }}'.split('-');
             const [,base] = '${{ fromJson(steps.config.outputs.key).value }}'.split('-');
+
+            if (!head || !base) {
+              return '';
+            }
 
             const compare = await github.repos.compareCommits({
               owner: 'taksnor',
@@ -72,7 +76,7 @@ jobs:
             return changelog;
 
       - name: Create Pull Request
-        uses: peter-evans/create-pull-request@v4
+        uses: peter-evans/create-pull-request@v3
         with:
           token: ${{ secrets.AYRBOT_GITHUB_TOKEN }}
           commit-message:
