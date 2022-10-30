@@ -30,3 +30,4 @@ jobs:
         with:
           command: preview
           stack-name: prod
+          comment-on-pr: true
