@@ -44,7 +44,7 @@ jobs:
         uses: google-github-actions/auth@v0
         with:
           workload_identity_provider: ${{ secrets.WORKLOAD_IDENTITY_PROVIDER }}
-          service_account: ${{ secrets.SERVICE_ACCOUNT_EMAIL }}
+          service_account: kubernetes-eng@ayr-core-service.iam.gserviceaccount.com
 
       - name: Use Node LTS
         if: steps.changes.outputs.src == 'true'
@@ -66,5 +66,4 @@ jobs:
         with:
           command: up
           refresh: ${{ matrix.refresh }}
-          cloud-url: gs://ayr-pulumi/infra-core-cluster
           stack-name: ${{ matrix.stack }}
