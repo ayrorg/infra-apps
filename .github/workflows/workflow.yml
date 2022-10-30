@@ -51,8 +51,8 @@ jobs:
         if: github.event_name == 'workflow_dispatch' || steps.changes.outputs.src == 'true'
         uses: 'google-github-actions/get-gke-credentials@v0'
         with:
-          cluster_name: 'my-cluster'
-          location: 'us-central1-a'
+          cluster_name: ${{ secrets.CLUSTER_NAME }}
+          location: ${{ secrets.CLUSTER_LOCATION }}
 
       - name: Use Node LTS
         if: github.event_name == 'workflow_dispatch' || steps.changes.outputs.src == 'true'
