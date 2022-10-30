@@ -8,7 +8,7 @@ on:
   push:
     branches:
       - main
-      - fixing-workflows
+  workflow_dispatch:
 
 jobs:
   apply-changes:
@@ -38,31 +38,32 @@ jobs:
               - 'yarn.lock'
               - 'package.json'
               - '.github/workflows/*'
+              - 'Pulumi.${{ matrix.stack }}.yaml'
 
       - name: Authenticate to GCP
-        if: steps.changes.outputs.src == 'true'
+        if: github.event_name == 'workflow_dispatch' OR steps.changes.outputs.src == 'true'
         uses: google-github-actions/auth@v0
         with:
           workload_identity_provider: ${{ secrets.WORKLOAD_IDENTITY_PROVIDER }}
           service_account: kubernetes-eng@ayr-core-service.iam.gserviceaccount.com
 
       - name: Use Node LTS
-        if: steps.changes.outputs.src == 'true'
+        if: github.event_name == 'workflow_dispatch' OR steps.changes.outputs.src == 'true'
         uses: actions/setup-node@v3
         with:
           node-version: lts/*
           cache: yarn
 
       - name: Install dependencies
-        if: steps.changes.outputs.src == 'true'
+        if: github.event_name == 'workflow_dispatch' OR steps.changes.outputs.src == 'true'
         run: yarn install
 
       - name: Lint
-        if: steps.changes.outputs.src == 'true'
+        if: github.event_name == 'workflow_dispatch' OR steps.changes.outputs.src == 'true'
         run: yarn lint
 
       - uses: pulumi/actions@v3
-        if: steps.changes.outputs.src == 'true'
+        if: github.event_name == 'workflow_dispatch' OR steps.changes.outputs.src == 'true'
         with:
           command: up
           refresh: ${{ matrix.refresh }}
