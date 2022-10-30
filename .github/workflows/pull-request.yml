@@ -26,7 +26,7 @@ jobs:
         run: yarn test --passWithNoTests
 
       - uses: pulumi/actions@v3
-        if: steps.changes.outputs.src == 'true'
         with:
           command: preview
           stack-name: prod
+          comment-on-pr: true
