@@ -19,7 +19,7 @@
     "test": "jest --coverage src/**/*"
   },
   "dependencies": {
-    "@pulumi/kubernetes": "^3.20.2",
+    "@pulumi/kubernetes": "^3.22.1",
     "@pulumi/pulumi": "^3.44.3"
   },
   "devDependencies": {
