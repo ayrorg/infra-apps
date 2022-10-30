@@ -42,7 +42,7 @@ jobs:
       - uses: cobraz/pulumi-set-config@main
         id: config
         env:
-          GITHUB_TOKEN: ${{ secrets.BJERKBOT_GITHUB_TOKEN }}
+          GITHUB_TOKEN: ${{ secrets.AYRBOT_GITHUB_TOKEN }}
         with:
           stack-name: ${{ matrix.env }}
           key: ${{ fromJson(steps.vars.outputs.result).name }}:tag
