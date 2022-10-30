@@ -53,7 +53,7 @@ const deployment = new k8s.apps.v1.Deployment(`${name}-deployment`, {
               },
               {
                 name: 'DATA_SOURCE_USER_FILE',
-                value: '/run/secrets/db-secrets/user',
+                value: '/run/secrets/db-secrets/username',
               },
               {
                 name: 'DATA_SOURCE_PASS_FILE',
