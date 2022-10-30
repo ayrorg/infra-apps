@@ -40,12 +40,19 @@ jobs:
               - '.github/workflows/*'
               - 'Pulumi.${{ matrix.stack }}.yaml'
 
-      - name: Authenticate to GCP
+      - name: Authenticate with GCP
         if: github.event_name == 'workflow_dispatch' || steps.changes.outputs.src == 'true'
         uses: google-github-actions/auth@v0
         with:
           workload_identity_provider: ${{ secrets.WORKLOAD_IDENTITY_PROVIDER }}
           service_account: kubernetes-eng@ayr-core-service.iam.gserviceaccount.com
+
+      - name: Authenticate with GKE
+        if: github.event_name == 'workflow_dispatch' || steps.changes.outputs.src == 'true'
+        uses: 'google-github-actions/get-gke-credentials@v0'
+        with:
+          cluster_name: 'my-cluster'
+          location: 'us-central1-a'
 
       - name: Use Node LTS
         if: github.event_name == 'workflow_dispatch' || steps.changes.outputs.src == 'true'
