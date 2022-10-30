@@ -49,7 +49,7 @@ jobs:
           value: ${{ fromJson(steps.vars.outputs.result).tag }}
 
       - name: Get commits
-        uses: actions/github-script@v4
+        uses: actions/github-script@v6.3.3
         id: changelog
         with:
           github-token: ${{ secrets.BJERKBOT_GITHUB_TOKEN }}
