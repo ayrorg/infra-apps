@@ -1,5 +1,5 @@
 import * as k8s from '@pulumi/kubernetes';
-import { image, tag } from './config';
+import { image, logLevel, tag } from './config';
 import { namespace } from './namespace';
 
 const name = 'billing-api';
@@ -45,6 +45,10 @@ const deployment = new k8s.apps.v1.Deployment(`${name}-deployment`, {
               {
                 name: 'PORT',
                 value: String(port),
+              },
+              {
+                name: 'LOG_LEVEL',
+                value: logLevel,
               },
               {
                 name: 'DSN',
