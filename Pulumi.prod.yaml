@@ -3,6 +3,6 @@ encryptedkey: CiQAwCZBCL9S9rvBagGe3KNZMxOTqlsDHlw37oXzHkk/gbomqy8SSQAu7GrOsyd5rv
 config:
   billing-api:image: europe-north1-docker.pkg.dev/ayr-core-service/ayr-core-service/billing-api
   billing-api:log-level: debug
-  billing-api:tag: main-ebebfec
+  billing-api:tag: main-18b642d
   infra-core-cluster:system-email:
     secure: v1:+S2JrvrR4BE/SjHS:/J0zyuSBsjOc3Vk76PUkDJktsZGqsUwTMePiP6DbeH0POmlPVWL5g4xnhw==
