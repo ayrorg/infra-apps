@@ -26,6 +26,7 @@ new k8s.apiextensions.CustomResource('billing-api-db-cluster', {
     databases: {
       billing: 'billing',
     },
+    enableConnectionPooler: true,
     allowedSourceRanges: null,
     resources: {
       requests: {

@@ -31,7 +31,7 @@ const deployment = new k8s.apps.v1.Deployment(`${name}-deployment`, {
             secret: {
               defaultMode: 420,
               secretName:
-                'postgres.acid-billing-db.credentials.postgresql.acid.zalan.do',
+                'billing.acid-billing-db.credentials.postgresql.acid.zalan.do',
             },
           },
         ],
@@ -53,7 +53,7 @@ const deployment = new k8s.apps.v1.Deployment(`${name}-deployment`, {
               {
                 name: 'DSN',
                 value:
-                  'postgres://acid-billing-db:5432/postgres?sslmode=disable',
+                  'postgres://acid-billing-db-pooler:5432/billing',
               },
               {
                 name: 'DATA_SOURCE_USER_FILE',
