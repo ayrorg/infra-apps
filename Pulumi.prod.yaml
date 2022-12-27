@@ -4,5 +4,6 @@ config:
   billing-api:image: europe-north1-docker.pkg.dev/ayr-core-service/ayr-core-service/billing-api
   billing-api:log-level: debug
   billing-api:tag: main-67558f6
+  lago:tag: v0.19.2-alpha
   infra-core-cluster:system-email:
     secure: v1:+S2JrvrR4BE/SjHS:/J0zyuSBsjOc3Vk76PUkDJktsZGqsUwTMePiP6DbeH0POmlPVWL5g4xnhw==
