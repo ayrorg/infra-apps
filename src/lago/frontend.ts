@@ -1,6 +1,6 @@
 import * as k8s from '@pulumi/kubernetes';
 import { interpolate } from '@pulumi/pulumi';
-import { apiDomain } from './config';
+import { apiDomain, tag } from './config';
 import { namespace } from './namespace';
 
 const name = 'lago';
@@ -27,7 +27,7 @@ const deployment = new k8s.apps.v1.Deployment(`${name}-frontend`, {
         containers: [
           {
             name: 'frontend',
-            image: 'getlago/front:v0.6.1-alpha',
+            image: interpolate`getlago/front:${tag}`,
             imagePullPolicy: 'IfNotPresent',
             ports: [{ containerPort: 80 }],
             env: [
