@@ -20,7 +20,7 @@
   },
   "dependencies": {
     "@pulumi/kubernetes": "^3.22.1",
-    "@pulumi/pulumi": "^3.44.3"
+    "@pulumi/pulumi": "^3.51.0"
   },
   "devDependencies": {
     "@bjerk/eslint-config": "^2.0.1",
