@@ -25,7 +25,7 @@ jobs:
       - name: Test
         run: yarn test --passWithNoTests
 
-      - uses: pulumi/actions@v3
+      - uses: pulumi/actions@v4
         with:
           command: preview
           stack-name: prod
