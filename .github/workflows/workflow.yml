@@ -69,7 +69,7 @@ jobs:
         if: github.event_name == 'workflow_dispatch' || steps.changes.outputs.src == 'true'
         run: yarn lint
 
-      - uses: pulumi/actions@v3
+      - uses: pulumi/actions@v4
         if: github.event_name == 'workflow_dispatch' || steps.changes.outputs.src == 'true'
         with:
           command: up
