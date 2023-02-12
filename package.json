@@ -19,6 +19,8 @@
     "test": "jest --coverage src/**/*"
   },
   "dependencies": {
+    "@pulumi/gcp": "^6.49.0",
+    "@pulumi/google-native": "^0.28.0",
     "@pulumi/kubernetes": "^3.22.1",
     "@pulumi/pulumi": "^3.44.3"
   },

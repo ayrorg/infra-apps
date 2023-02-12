@@ -1,8 +1,8 @@
-import './ingress-controller';
-import './lago/api';
-import './lago/ingress';
-import './postgres-operator';
+// import './lago/api';
+// import './lago/ingress';
 
-import './billing-api/deployment';
-import './billing-api/ingress';
-import './billing-api/db';
+// import './billing-api/namespace';
+
+// import './billing-api/deployment';
+// import './billing-api/ingress';
+// import './billing-api/db';

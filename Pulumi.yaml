@@ -1,5 +1,7 @@
-name: infra-core-cluster
+name: infra-apps
 runtime: nodejs
 main: src/main.ts
 backend:
-  url: gs://ayr-pulumi/infra-core-cluster
+  url: gs://ayr-pulumi/infra-apps
+# config:
+#   pulumi:disable-default-providers: '*'

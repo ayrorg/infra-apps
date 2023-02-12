@@ -1,16 +1,18 @@
 {
-  "ts-node": {
-    "files": true,
-    "esm": true
-  },
-  "extends": "@tsconfig/node16-strictest-esm/tsconfig.json",
   "compilerOptions": {
-    "module": "node16",
+    "strict": true,
+    "outDir": "bin",
+    "target": "es2016",
+    "module": "commonjs",
     "moduleResolution": "node",
-    "exactOptionalPropertyTypes": false,
-    "declaration": true,
     "sourceMap": true,
-    "outDir": "out"
+    "experimentalDecorators": true,
+    "pretty": true,
+    "noFallthroughCasesInSwitch": true,
+    "noImplicitReturns": true,
+    "forceConsistentCasingInFileNames": true
   },
-  "include": ["src/**/*.ts"]
+  "files": [
+    "resources/main.ts"
+  ]
 }
